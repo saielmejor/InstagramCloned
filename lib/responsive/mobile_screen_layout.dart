@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MobilebScreenLayout extends StatelessWidget {
-  const MobilebScreenLayout({ Key? key }) : super(key: key);
+class MobileScreenLayout extends StatelessWidget {
+  const MobileScreenLayout({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+        title: const Text('AppBar Demo'),),
       body: Center(
         child:Text('This is mobile screen')
       )

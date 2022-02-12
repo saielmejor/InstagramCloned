@@ -7,9 +7,11 @@ class WebScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+        title: const Text('AppBar Demo'),),
       body: Center(
-        child:Text('This is mobile screen')
-      )
+        child:Text('This is mobile screen'),
+      ),
       
     );
   }
