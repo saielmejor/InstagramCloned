@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1000146315393:android:e6777e60898a6be7cc4580",
+        "mobilesdk_app_id": "1:1000146315393:android:b9c3d4eb08fad6adcc4580",
         "android_client_info": {
           "package_name": "com.example.instagram_flutter"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "1000146315393-0d3vbgj8dnubauqerlnt0hkmmcju7nut.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1000146315393-p32ltt2239rdgj9fdoh180sk63t8d0dc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.instagramFlutter"
+              }
             }
           ]
         }

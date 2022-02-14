@@ -147,7 +147,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 onTap: signUpUser,
                 child: Container(
                   child: _isLoading
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator(
                             color: primaryColor,
                           ),

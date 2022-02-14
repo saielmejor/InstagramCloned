@@ -52,4 +52,27 @@ class AuthMethods {
     }
     return res;
   }
+
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = "Some error ocurred";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = "success";
+      } else {
+        res = "Please enter correct login information";
+      }
+      // } on FirebaseAuthException catch (err) {
+      //   // if (err.code == ' wrong password') {
+      //   //   res = "please enter correct password";
+      //   // }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 }
