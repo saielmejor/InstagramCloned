@@ -8,17 +8,16 @@ class User {
   final String bio;
   final List followers;
   final List following;
-  //create constructor
 
-  const User({
-    required this.email,
-    required this.uid,
-    required this.photoUrl,
-    required this.username,
-    required this.bio,
-    required this.followers,
-    required this.following,
-  });
+  const User(
+      {required this.username,
+      required this.uid,
+      required this.photoUrl,
+      required this.email,
+      required this.bio,
+      required this.followers,
+      required this.following});
+
   Map<String, dynamic> toJson() => {
         "username": username,
         "uid": uid,
@@ -28,17 +27,17 @@ class User {
         "followers": followers,
         "following": following,
       };
-  //create a model for snapshot
-
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
+
     return User(
-        bio: snapshot['bio'],
-        uid: snapshot['uid'],
-        username: snapshot['username'],
-        email: snapshot['email'],
-        photoUrl: snapshot['photoUrl'],
-        followers: snapshot['followers'],
-        following: snapshot['following']);
+      username: snapshot["username"],
+      uid: snapshot["uid"],
+      email: snapshot["email"],
+      photoUrl: snapshot["photoUrl"],
+      bio: snapshot["bio"],
+      followers: snapshot["followers"],
+      following: snapshot["following"],
+    );
   }
 }
