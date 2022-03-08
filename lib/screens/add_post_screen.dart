@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:instagram_flutter/models/user.dart' as model;
+import 'package:instagram_flutter/models/user.dart';
 import 'package:instagram_flutter/providers/user_provider.dart';
 import 'package:instagram_flutter/resources/firestore_storage.dart';
 import 'package:instagram_flutter/utils/colors.dart';
@@ -19,7 +19,11 @@ class AddPostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
   final TextEditingController _descriptionController = TextEditingController();
+  bool _isLoading = false;
+
   void postImage(String uid, String username, String profImage) async {
+    _isLoading = true;
+
     try {
 // upload the post
       String res = await FirestoreMethod().uploadPost(
@@ -30,8 +34,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
         profImage,
       );
       if (res == "sucess") {
+        setState(() {
+          _isLoading = false;
+        });
         showSnackBar('Posted!', context);
+        clearImage();
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         showSnackBar(res, context);
       }
     } catch (err) {
@@ -78,6 +89,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
         });
   }
 
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -87,7 +104,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    model.User user = Provider.of<UserProvider>(context).getUser;
+    final UserProvider user = Provider.of<UserProvider>(context);
     return _file == null
         ? Center(
             child: IconButton(
@@ -99,13 +116,18 @@ class _AddPostScreenState extends State<AddPostScreen> {
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () {},
+                onPressed: () {
+                  clearImage();
+                },
               ),
               title: const Text('Post to'),
               centerTitle: false,
               actions: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    postImage(user.getUser.uid, user.getUser.username,
+                        user.getUser.photoUrl);
+                  },
                   child: const Text(
                     'Post',
                     style: TextStyle(
@@ -118,13 +140,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: Column(
               children: [
+                _isLoading
+                    ? const LinearProgressIndicator()
+                    : const Padding(padding: EdgeInsets.only(top: 0)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(
-                        user.photoUrl,
+                        user.getUser.photoUrl,
                       ),
                     ),
                     SizedBox(

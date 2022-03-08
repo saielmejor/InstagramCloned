@@ -15,9 +15,9 @@ class AuthMethods {
 //get the data from mobile screen
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!; // gets user from firebase
-    DocumentSnapshot snap =
+    DocumentSnapshot documentSnapshot =
         await _firestore.collection('users').doc(currentUser.uid).get();
-    return model.User.fromSnap(snap); // gets the snapshop from models.user
+    return model.User.fromSnap(documentSnapshot); // gets the snapshop from models.user
   }
 
   //sign up user

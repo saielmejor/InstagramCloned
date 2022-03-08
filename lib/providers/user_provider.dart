@@ -7,13 +7,13 @@ import 'package:instagram_flutter/resources/auth_methods.dart';
 
 class UserProvider with ChangeNotifier {
   User? _user;
-  User get getUser => _user!;
-  final AuthMethods _authMethods = AuthMethods(); // initialized authMethods
+  final AuthMethods _authMethods = AuthMethods();
 
-//updates the value of the user
+  User get getUser => _user!;
+
   Future<void> refreshUser() async {
     User user = await _authMethods.getUserDetails();
     _user = user;
-    notifyListeners(); // notifies all listeners
+    notifyListeners();
   }
 }
