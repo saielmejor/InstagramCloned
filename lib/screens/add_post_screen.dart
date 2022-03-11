@@ -22,7 +22,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
   bool _isLoading = false;
 
   void postImage(String uid, String username, String profImage) async {
-    _isLoading = true;
+    //set state to true 
+    setState(() {
+      _isLoading = true;
+    });
 
     try {
 // upload the post
@@ -40,9 +43,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
         showSnackBar('Posted!', context);
         clearImage();
       } else {
-        setState(() {
-          _isLoading = false;
-        });
         showSnackBar(res, context);
       }
     } catch (err) {
@@ -82,7 +82,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               child: const Text('Cancel'),
               onPressed: () async {
                 Navigator.of(context).pop();
-                ; //pick image
+                //pick image
               },
             )
           ]);
@@ -143,6 +143,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 _isLoading
                     ? const LinearProgressIndicator()
                     : const Padding(padding: EdgeInsets.only(top: 0)),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
