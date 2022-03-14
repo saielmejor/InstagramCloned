@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/models/user.dart';
 import 'package:instagram_flutter/providers/user_provider.dart';
+import 'package:instagram_flutter/resources/firestore_storage.dart';
+import 'package:instagram_flutter/screens/comments_screen.dart';
 import 'package:instagram_flutter/utils/colors.dart';
 import 'package:instagram_flutter/widget/like_animation.dart';
 import 'package:intl/intl.dart';
@@ -86,7 +88,13 @@ class _PostCardState extends State<PostCard> {
           // use gesture detector so it can detect that user double click the photo to like it
 
           GestureDetector(
-            onDoubleTap: () {
+            onDoubleTap: () async {
+              await FirestoreMethod().likePost(
+                widget.snap['postId'],
+                user.uid,
+                widget.snap['likes'],
+              );
+
               setState(() {
                 isLikeAnimating = true;
               });
@@ -125,15 +133,24 @@ class _PostCardState extends State<PostCard> {
                 isAnimating: widget.snap['likes'].contains(user.uid),
                 smallLike: true, // make sure it contains user uid
                 child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ),
+                  onPressed: () async {
+                    await FirestoreMethod().likePost(
+                      widget.snap['postId'],
+                      user.uid,
+                      widget.snap['likes'],
+                    );
+                  },
+                  icon: widget.snap['likes'].contains(user.uid)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        )
+                      : const Icon(Icons.favorite_border),
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => CommentScreen())),
                 icon: const Icon(
                   Icons.comment_outlined,
                 ),

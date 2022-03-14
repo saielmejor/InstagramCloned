@@ -42,4 +42,25 @@ class FirestoreMethod {
     }
     return res;
   }
+
+// this will control the number of like post
+  Future<void> likePost(String postId, String uid, List likes) async {
+    try {
+      //if likes contains uid
+      if (likes.contains(uid)) {
+        await _firestore.collection('post').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid])
+        }); //remove the uid
+
+      } else {
+        await _firestore.collection('post').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        }); //adds uids
+      }
+    } catch (err) {
+      print(
+        err.toString(),
+      );
+    }
+  }
 }
